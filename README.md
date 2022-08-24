@@ -20,7 +20,7 @@
   <a href="#about">About</a> &#xa0; | &#xa0; 
   <a href="#features">Features</a> &#xa0; | &#xa0;
   <a href="#technologies">Technologies</a> &#xa0; | &#xa0;
-  <a href="https://github.com/MrHencke"Target="_blank">Fork Author</a>
+  <a href="https://github.com/MrHencke"Target="_blank">Fork Author</a> &#xa0; | &#xa0;
   <a href="https://github.com/ntnu-ai-lab"Target="_blank">Original Author</a>
 </p>
 
@@ -43,9 +43,9 @@ The following tools were used in this project:
 
 - List as needed
 
-Fork made with :heart: by <a href="https://github.com/MrHencke"Target="_blank">Henrik</a>
+Fork made with :heart: by <a href="https://github.com/MrHencke" target="_blank">Henrik</a>
 
-Original skeleton assignment by <a href="https://github.com/ntnu-ai-lab"Target="_blank">NTNU AI Lab</a>
+Original skeleton assignment by <a href="https://github.com/ntnu-ai-lab" target="_blank">NTNU AI Lab</a>
 
 &#xa0;
 
