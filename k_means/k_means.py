@@ -12,16 +12,16 @@ class KMeans:
         self.k = k
         self.data = pd.DataFrame(columns=["x0", "x1", "cluster"])
         self.centroids = pd.DataFrame(columns=["x0", "x1"])
-
-    def get_centroid(self, k: int):
-        return self.centroids.iloc[k]
+        self.changes = True
+        self.iterations = 0
 
     def update_centroids(self):
+        # TODO: Shorten this if possible, do assignment once, possibly with lambda?
         for i in range(self.k):
-            x0 = self.data.loc[self.data["cluster"] == i]["x0"].mean()
-            x1 = self.data.loc[self.data["cluster"] == i]["x1"].mean()
-            self.centroids.loc[i]["x0"] = x0
-            self.centroids.loc[i]["x1"] = x1
+            self.centroids.loc[i]["x0"] = self.data.loc[self.data["cluster"] == i]["x0"].mean(
+            )
+            self.centroids.loc[i]["x1"] = self.data.loc[self.data["cluster"] == i]["x1"].mean(
+            )
 
     def fit(self, X: pd.DataFrame):
         """
@@ -32,35 +32,32 @@ class KMeans:
                 m rows (#samples) and n columns (#features)
         """
         # Initialize random centroids
-        for i in range(self.k):
+        for _ in range(self.k):
             self.centroids = self.centroids.append(
                 X.sample(replace=False), ignore_index=True)
 
-        # Perform initial update step until all elements are assigned to a cluster
-        for _, row in X.iterrows():     # Check which cluster it fits best with, then insert
-            cluster = min(range(self.k),
-                          key=lambda i: squared_euclidian_distance(
-                              self.get_centroid(i).values, row.values))
-            row["cluster"] = cluster
-            self.data = self.data.append(row, ignore_index=True)
-        self.update_centroids()
+        # Copy dataset into internal data, set cluster to -1 (unassigned)
+        self.data = self.data.append(X, ignore_index=True).assign(
+            cluster=-1).astype({'cluster': 'int32'})
 
         # Perform update step until convergence
-        i = 0
-        changes = True
-        while changes:
-            changes = False
-            for _, row in self.data.iterrows():
-                cluster = min(range(self.k),
-                              key=lambda i: squared_euclidian_distance(
-                    self.get_centroid(i).values, row.iloc[0:2].values))
-                if int(row["cluster"]) != cluster:
-                    changes = True
-                    row["cluster"] = cluster
+        while self.changes:
+            self.changes = False
+            self.data["cluster"] = self.data.apply(
+                lambda row: self.update_point_cluster(row), 1)
             self.update_centroids()
-            i = i+1
+            self.iterations += 1
 
-        print(f"Fitting required {i} iterations")
+        print(f"Fitting required {self.iterations} iterations")
+
+    def update_point_cluster(self, row):
+        cluster = min(range(self.k),
+                      key=lambda i: euclidean_distance(
+            self.get_centroid(i).values, row.iloc[0:2].values))
+        if row["cluster"] != cluster:
+            self.changes = True
+            return cluster
+        return row["cluster"]
 
     def predict(self, X: pd.DataFrame):
         """
@@ -84,6 +81,12 @@ class KMeans:
                 range(self.k), key=lambda i: euclidean_distance(self.centroids.loc[i], row))
         return result
 
+    def get_centroid(self, k: int):
+        """
+        Returns centroid k
+        """
+        return self.centroids.iloc[k]
+
     def get_centroids(self):
         """
         Returns the centroids found by the K-mean algorithm
@@ -103,10 +106,6 @@ class KMeans:
 
 
 # --- Some utility functions
-
-def squared_euclidian_distance(x, y):
-    return euclidean_distance(x, y)**2
-
 
 def euclidean_distortion(X, z):
     """
