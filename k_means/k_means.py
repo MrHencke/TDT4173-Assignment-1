@@ -31,7 +31,7 @@ class KMeans:
             X (array<m,n>): a matrix of floats with
                 m rows (#samples) and n columns (#features)
         """
-        # Initialize random centroids
+        # Initialize random centroids (from existing datapoints)
         for _ in range(self.k):
             self.centroids = self.centroids.append(
                 X.sample(replace=False), ignore_index=True)

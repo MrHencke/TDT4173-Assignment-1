@@ -27,7 +27,7 @@ class LogisticRegression:
                 m binary 0.0/1.0 labels
         """
 
-        # Transform input to numpy array, and stack a bias column onto it
+        # Transform input to numpy array
         X_np = np.array(X)
         samples = len(X_np[0])
         features = len(X_np[1])
