@@ -132,8 +132,5 @@ dmypy.json
 *.docx
 *.tmp
 
-#PDF
-*.pdf
-
 #Delivery folder
 /delivered
