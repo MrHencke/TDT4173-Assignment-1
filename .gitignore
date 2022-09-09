@@ -134,3 +134,4 @@ dmypy.json
 
 #Delivery folder
 /delivered
+*.zip
