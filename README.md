@@ -18,8 +18,6 @@
 
 <p align="center">
   <a href="#about">About</a> &#xa0; | &#xa0; 
-  <a href="#features">Features</a> &#xa0; | &#xa0;
-  <a href="#technologies">Technologies</a> &#xa0; | &#xa0;
   <a href="https://github.com/MrHencke"Target="_blank">Fork Author</a> &#xa0; | &#xa0;
   <a href="https://github.com/ntnu-ai-lab"Target="_blank">Original Author</a>
 </p>
@@ -30,18 +28,9 @@
 
 This is my solution for the individual assignment in TDT4173, Autumn 2022.
 I chose to implement the following algorithms:
-- Number 1
-- Number 2
+- K Means Clustering
+- Logistic Regression
 
-## Features ##
-
-None yet
-
-## Technologies ##
-
-The following tools were used in this project:
-
-- List as needed
 
 Fork made with :heart: by <a href="https://github.com/MrHencke" target="_blank">Henrik</a>
 
